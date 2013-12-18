@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><!-- #BeginTemplate "/Templates/standard.dwt" --><!-- DW6 -->
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+</head>
+
+<script language="JavaScript">
+  
+  function load(){
+    getIFrameDocument("editorWindow").designMode = "On";       
+  } // func
+  
+  
+  function getIFrameDocument(aID){
+    if (document.getElementById(aID).contentDocument){  
+      return document.getElementById(aID).contentDocument;
+    }
+	else {
+      return document.frames[aID].document;
+    } // if-else
+  } // func
+  
+  // Clear editor window
+  function clear_data(){
+    // reload
+	getIFrameDocument("editorWindow").body.innerHTML ="";
+  } // clear_data
+
+
+  // parsing Ascent order data
+  function analyse(){
+    src =   getIFrameDocument("editorWindow");
+
+	src_td = src.getElementsByTagName("td");
+	for (var i=0; i < src_td.length;i++){
+	  document.getElementById("result").innerHTML += i + ": " + src_td[i].innerHTML + "<br /><br />";
+	}  // for
+	
+  } // parse_data
+</script>
+
+<body onload="load()" topmargin="0" marginheight="0" bgcolor="#FFFFFF" background="../images/bg.jpg" style="background-repeat: repeat-x;">
+
+			<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+	        <tr><td>
+			  <b><font size="4">Cart Order - Copy and Paste Open Cart Order to make invoices</font></b><br>
+			  <br>
+			  <iframe src="editor.htm" id="editorWindow" style="margin: 5px;" width="90%"></iframe>
+			  <form name="form1" action="ascent.php" method="POST" onsubmit="return ">
+			    <input name="po" type= "hidden" value="">
+			    <input name="shipto" type= "hidden" value="">
+			    <input name="msg" type= "hidden" value="">
+                <!-- <input type="submit"> -->
+			    <input type= "button" onclick="analyse()" value="Anaylse">&nbsp;&nbsp;&nbsp;&nbsp;
+			    <input type= "button" onclick="clear_data()" value="Clear">
+			    <br><br>
+			    <select multiple name="code[]" id="scode" style="visibility: hidden"></select>
+			    <select multiple name="qty[]" id="sqty" style="visibility: hidden"></select>
+			    <select multiple name="price[]" id="sprice" style="visibility: hidden"></select>
+			    <select multiple name="freight[]" id="sfreight" style="visibility: hidden"></select>
+ 			  </form>
+            </td></tr>
+            </table>
+
+<div id="result"></div>
+</body>
+<!-- #EndTemplate --></html>

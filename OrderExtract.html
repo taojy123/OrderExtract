@@ -1,0 +1,172 @@
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+    <script type="text/javascript">
+
+        function trim(str){
+            str = str.replace(/^(\s|\u00A0)+/,'');
+            for(var i=str.length-1; i>=0; i--){
+                if(/\S/.test(str.charAt(i))){
+                    str = str.substring(0, i+1);
+                    break;
+                }
+            }
+            return str;
+        }
+
+        function cls(){
+            document.getElementById("text").value = ""
+            document.getElementById("result").style.display = "none"
+        }
+
+
+        function analyse(){
+
+            var text = document.getElementById("text").value
+            var i
+            var j
+
+            if(text.indexOf("Instructions")>-1){
+                i = text.indexOf("Order Details")
+                j = text.indexOf("Instructions")
+                var Order_Details_str = text.substring(i+"Order Details".length, j).trim().replace(/\n/g, "<br/>")
+                document.getElementById("Order_Details_str").innerHTML = Order_Details_str
+
+                i = text.indexOf("Instructions")
+                j = text.indexOf("Payment Address")
+                var Instructions_str = text.substring(i+"Instructions".length, j).trim().replace(/\n/g, "<br/>")
+                document.getElementById("Instructions_str").innerHTML = Instructions_str
+
+                document.getElementById("Instructions_str").style.display = "block"
+                document.getElementById("Instructions").style.display = "block"
+            }
+            else{
+                i = text.indexOf("Order Details")
+                j = text.indexOf("Payment Address")
+                var Order_Details_str = text.substring(i+"Order Details".length, j).trim().replace(/\n/g, "<br/>")
+                document.getElementById("Order_Details_str").innerHTML = Order_Details_str
+
+                document.getElementById("Instructions_str").style.display = "none"
+                document.getElementById("Instructions").style.display = "none"
+
+            }
+
+            i = text.indexOf("Payment Address")
+            j = text.indexOf("\nProduct\t")
+            var Payment_Address_str = text.substring(i+"Payment Address".length, j).trim().replace(/\n/g, "<br/>")
+            document.getElementById("Payment_Address_str").innerHTML = Payment_Address_str
+
+            i = text.indexOf("\nProduct\t")
+            j = text.indexOf("Sub-Total:")
+            var Table_str = text.substring(i, j).trim()
+
+
+            var lines = Table_str.split("\n")
+            var tab_str = "<table >"
+
+            var line_str = "<tr>"
+            var line = lines[0].split("\t")
+            for (var j =0;j<line.length;j++ ){
+                line_str += "<th style='border:1px solid #dddddd'>" + line[j] + "</th>"
+            }
+            line_str += "</tr>"
+            tab_str += line_str
+
+            for(var i=1;i < lines.length;i++){
+                var line_str = "<tr>"
+                var line = lines[i].split("\t")
+                for (var j =0;j<line.length;j++ ){
+                    line_str += "<td style='border:1px solid #dddddd'>" + line[j] + "</td>"
+                }
+                line_str += "</tr>"
+                tab_str += line_str
+            }
+            tab_str += "</table>"
+            Table_str = tab_str
+
+            document.getElementById("Table_str").innerHTML = Table_str
+
+
+            i = text.indexOf("Sub-Total:")
+            j = text.indexOf("\nTotal:\t")
+            var Sub_Total_str = text.substring(i+"Sub-Total:".length, j).trim().replace(/\n/g, "<br/>")
+            document.getElementById("Sub_Total_str").innerHTML = Sub_Total_str
+
+            i = text.indexOf("\nTotal:\t")
+            j = text.length
+            var Total_str = text.substring(i+"\nTotal:\t".length, j).trim().replace(/\n/g, "<br/>")
+            document.getElementById("Total_str").innerHTML = Total_str
+
+            document.getElementById("result").style.display = "block"
+
+        }
+
+    </script>
+    
+</head>
+
+
+
+<body>
+
+<div id="input">
+    <textarea style="width: 100%; height: 200px" id="text"></textarea>
+    <br/>
+    <button  onclick="analyse()">Analyse</button>
+    <button  onclick="cls()">Clear</button>
+</div>
+
+
+<div id="result" style="border:1px solid #aaaaaa;display: none">
+
+    <br/>
+
+    <div style="font-weight: bold">Order Details</div>
+    <div id="Order_Details_str"></div>
+
+    <br/>
+    <br/>
+
+    <div style="font-weight: bold" id="Instructions">Instructions</div>
+    <div id="Instructions_str"></div>
+
+    <br/>
+    <br/>
+
+    <div style="font-weight: bold">Payment Address</div>
+    <div id="Payment_Address_str"></div>
+
+    <br/>
+    <br/>
+
+
+    <div id="Table_str"></div>
+
+    <br/>
+    <br/>
+
+    <div style="font-weight: bold">Sub Total</div>
+    <div id="Sub_Total_str"></div>
+
+    <br/>
+    <br/>
+
+    <div style="font-weight: bold">Total</div>
+    <div id="Total_str"></div>
+
+    <br/>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>
+
+        

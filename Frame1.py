@@ -46,8 +46,7 @@ class Frame1(wx.Frame):
     def OnButton1Button(self, event):
         text = self.textCtrl1.GetValue()
         print [text]
-        
-        text = text.replace("\n\n", "\n")
+
         
         i = text.find("Order Details")
         j = text.find("Instructions")
