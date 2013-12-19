@@ -29,6 +29,8 @@
             var i
             var j
 
+            text = text.replace(/ \t/g, "\t")
+
             if(text.indexOf("Instructions")>-1){
                 i = text.indexOf("Order Details")
                 j = text.indexOf("Instructions")
@@ -51,8 +53,24 @@
 
                 document.getElementById("Instructions_str").style.display = "none"
                 document.getElementById("Instructions").style.display = "none"
-
             }
+
+
+            var temp_str = ""
+            var str_list = Order_Details_str.split("<br/>")
+            for(var i=0; i<str_list.length;i++){
+                var ss = str_list[i].split(":")
+                var s0 = ss[0]
+                var s1 = ss[1]
+                temp_str += "<b>" + s0 + ":</b>" + s1 + "<br/>"
+                if(i==2){
+                    temp_str += "<br/>"
+                }
+            }
+            temp_str.replace(/\t/g, "<br/>")
+            document.getElementById("Order_Details_str").innerHTML = temp_str
+
+
 
             i = text.indexOf("Payment Address")
             j = text.indexOf("\nProduct\t")
